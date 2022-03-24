@@ -6,8 +6,12 @@ add_library(OpenCV INTERFACE)
 target_include_directories(OpenCV INTERFACE ${OpenCV_INCLUDE_DIRS})
 target_link_libraries(OpenCV INTERFACE ${OpenCV_LIBS})
 
+# Windows上没找到可以find_package(eigen)的包
+add_library(Eigen INTERFACE)
+target_include_directories(Eigen INTERFACE "${Eigen_INCLUDE_DIR}")
+
 add_library(common INTERFACE)
-target_link_libraries(common INTERFACE OpenCV)
+target_link_libraries(common INTERFACE OpenCV Eigen)
 if(WIN32)
 	target_compile_definitions(common INTERFACE /utf-8)
 endif()
@@ -37,3 +41,4 @@ set_property(GLOBAL PROPERTY USE_FOLDERS ON)
 
 add_subdirectory(window)
 add_subdirectory(transparency)
+add_subdirectory(eigen)
